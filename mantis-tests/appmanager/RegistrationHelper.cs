@@ -24,7 +24,9 @@ namespace mantis_tests
 
         private void OpenRegistrationForm()
         {
-            driver.FindElement(By.ClassName("back-to-login-link")).Click();
+            //manager.Navigation.GoToLoginPage();
+            //driver.FindElement(By.XPath("//a[contains(@href,'signup_page.php')]")).Click();
+            manager.Navigation.GoToRegistrationPage();
         }
 
         private void SubmitRegistration()

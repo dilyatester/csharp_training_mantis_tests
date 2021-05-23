@@ -8,6 +8,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using SimpleBrowser.WebDriver;
+
 namespace mantis_tests
 
 {
@@ -16,18 +18,20 @@ namespace mantis_tests
         protected IWebDriver driver;
         protected string baseURL;
 
-        public RegistrationHelper Registration { get; private set; }
-        public FtpHelper Ftp { get; private set; }
-        public LoginHelper Login { get; private set; }
-        public NavigationHelper Navigation { get; private set; }
-        internal ProjectManagementHelper Project { get; private set; }
+        public RegistrationHelper Registration { get; set; }
+        public FtpHelper Ftp { get; set; }
+        public LoginHelper Login { get; set; }
+        public NavigationHelper Navigation { get; set; }
+        internal ProjectManagementHelper Project { get; set; }
+        public AdminHelper Admin { get; set; }
+        public APIHelper API { get; set; }
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
 
         private ApplicationManager()
         {
-            driver = new ChromeDriver();
+            driver = new SimpleBrowserDriver();
             baseURL = "http://localhost/mantisbt-2.25.1";
 
             Registration = new RegistrationHelper(this);
@@ -35,6 +39,8 @@ namespace mantis_tests
             Login = new LoginHelper(this);
             Navigation = new NavigationHelper(this, baseURL);
             Project = new ProjectManagementHelper(this);
+            Admin = new AdminHelper(this, baseURL);
+            API = new APIHelper(this);
 
 
         }
@@ -56,7 +62,7 @@ namespace mantis_tests
             if (! app.IsValueCreated)
             {
                 ApplicationManager newInstance = new ApplicationManager();
-                newInstance.driver.Url = "http://localhost/mantisbt-2.25.1/login_page.php";
+                newInstance.driver.Url = newInstance.baseURL + "/login_page.php";
                 app.Value = newInstance;
             }
             return app.Value;

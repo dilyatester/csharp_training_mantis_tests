@@ -20,25 +20,30 @@ namespace mantis_tests
         [Test]
         public void RemoveProject()
         {
-            
 
-            List<ProjectData> oldProjects = app.Project.GetProjectList();
+            AccountData accountAPI = new AccountData()
+            {
+                Name = "administrator",
+                Password = "root"
+            };
+
+            List<ProjectData> oldProjects = app.API.GetProjectList(accountAPI);//app.Project.GetProjectList();
 
             //Если проектов нет, то создадим один
             if (oldProjects.Count < 1)
             {
                 ProjectData project = new ProjectData() { Name = GenerateRandomString(7), Description = "My description" };
 
-                app.Project.Create(project);
+                app.API.CreateNewProject(accountAPI, project);
 
-                oldProjects = app.Project.GetProjectList();
+                oldProjects = app.API.GetProjectList(accountAPI);
             }
 
             //Удаляем первый проект в списке
             ProjectData toBeRemoved = oldProjects.First();
             app.Project.RemoveByName(toBeRemoved.Name);
 
-            List<ProjectData> newProjects = app.Project.GetProjectList();
+            List<ProjectData> newProjects = app.API.GetProjectList(accountAPI);
 
             oldProjects.Remove(toBeRemoved);
 

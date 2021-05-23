@@ -41,7 +41,7 @@ namespace mantis_tests
 
         private void OpenProjectByText(string name)
         {
-            driver.FindElement(By.LinkText(name)).Click();
+            driver.FindElement(By.XPath("//a[contains(@href,'manage_proj_edit_page.php?project_id')]")).Click();
         }
 
         public List<ProjectData> GetProjectList()

@@ -25,20 +25,26 @@ namespace mantis_tests
             {
                 app.Ftp.Upload("/config_defaults_inc.php", localFile);
             }
-
-
         }
        
         [Test]
         public void TestAccountRegistration()
         {
+            
             AccountData account = new AccountData()
             {
-                Name = "testuser1",
+                Name = "testuser2",
                 Password = "password",
                 Email = "testuser@localhost.localdomain"
             };
 
+            List<AccountData> accounts = app.Admin.GetAllAccounts();
+            AccountData existingAccount = accounts.Find(x => x.Name == account.Name);
+            if (existingAccount != null)
+            {
+                app.Admin.DeleteAccount(existingAccount);
+            }
+            //app.Admin.DeleteAccount(account);
             app.Registration.Register(account);
         }
         [TestFixtureTearDown]

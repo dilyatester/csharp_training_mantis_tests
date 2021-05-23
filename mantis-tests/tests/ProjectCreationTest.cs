@@ -20,9 +20,15 @@ namespace mantis_tests
         [Test]
         public void CreateProject()
         {
+            AccountData accountAPI = new AccountData()
+            {
+                Name = "administrator",
+                Password = "root"
+            };
+
             ProjectData project = new ProjectData() { Name = "NewProject", Description = "My description" };
 
-            List<ProjectData> oldProjects = app.Project.GetProjectList();
+            List<ProjectData> oldProjects = app.API.GetProjectList(accountAPI);//app.Project.GetProjectList();
 
             //Если такой проект уже существует, то сгенерируемслучайное имя
             if (oldProjects.Contains(project))
@@ -32,7 +38,7 @@ namespace mantis_tests
 
             app.Project.Create(project);
 
-            List<ProjectData> newProjects = app.Project.GetProjectList();
+            List<ProjectData> newProjects = app.API.GetProjectList(accountAPI);//app.Project.GetProjectList();
             oldProjects.Add(project);
             oldProjects.Sort();
             newProjects.Sort();

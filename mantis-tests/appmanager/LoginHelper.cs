@@ -60,7 +60,7 @@ namespace mantis_tests
         {
             if (IsLoggedIn())
             {
-                driver.FindElement(By.ClassName("fa-sign-out")).Click();
+                driver.FindElement(By.XPath("//a[contains(@href,'logout_page.php')]")).Click();
             }
             
         }

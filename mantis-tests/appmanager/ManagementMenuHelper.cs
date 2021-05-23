@@ -34,6 +34,16 @@ namespace mantis_tests
                 return;
             }
             driver.Navigate().GoToUrl(baseURL + "/login_page.php");
+            driver.Url = baseURL + "/login_page.php";
+        }
+
+        public void GoToRegistrationPage()
+        {
+            if (driver.Url == baseURL + "/signup_page.php")
+            {
+                return;
+            }
+            driver.Url = baseURL + "/signup_page.php";
         }
 
         public void GoToManagementPage()
@@ -43,13 +53,15 @@ namespace mantis_tests
             {
                 return;
             }
-            driver.FindElement(By.XPath("//*[@id='sidebar']/ul/li/a/i[@class='fa fa-gears menu-icon']")).Click();
+            driver.Url = baseURL + "/manage_overview_page.php";
+            //driver.FindElement(By.XPath("//*[@id='sidebar']/ul/li/a/i[@class='fa fa-gears menu-icon']")).Click();
         }
 
         public void GoToProjectManagement()
         {
             GoToManagementPage();
-            driver.FindElement(By.XPath("//a[@href='/mantisbt-2.25.1/manage_proj_page.php']")).Click();
+            driver.Url = baseURL + "/manage_proj_page.php";
+            //driver.FindElement(By.XPath("//a[@href='/mantisbt-2.25.1/manage_proj_page.php']")).Click();
 
         }
     }
